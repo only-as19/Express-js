@@ -18,7 +18,13 @@ app.get('/about', (req, res) => {
   res.status(200).send('About Page')
 })
 
-app.all('*', (req, res) => {
+// app.all('*', (req, res) => {
+//   res.status(404).send('<h1>resource not found</h1>')
+// })
+
+// in express version 5
+
+app.use((req, res) => {
   res.status(404).send('<h1>resource not found</h1>')
 })
 
