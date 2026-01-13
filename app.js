@@ -1,42 +1,26 @@
-// Express: Express is a minimal, flexible, node js web app framework 
-// designed to make developing websites, web apps and apps much faster and easier. 
-
-// not built in
-
-// npm install express --save
-
 const express = require('express')
+const path = require('path')
+
 
 const app = express()
 
-app.get('/', (req, res) => {
-  console.log('user hit the resource')
-  res.status(200).send('Home Page')
+
+// setup statics and middleware
+// static assets: are those assets that server don't need to chnage these files e.g, JS files, CSS file etc
+
+app.use(express.static('./public'))
+
+app.get('/',(req,res)=>{
+  res.sendFile(path.resolve(__dirname,'./navbar-app/index.html'))
 })
 
-app.get('/about', (req, res) => {
-  res.status(200).send('About Page')
+app.use((req,res)=>{
+  res.status.send('Resources not found')
 })
 
-// app.all('*', (req, res) => {
-//   res.status(404).send('<h1>resource not found</h1>')
-// })
 
-// in express version 5
 
-app.use((req, res) => {
-  res.status(404).send('<h1>resource not found</h1>')
+app.listen(5000,()=>{
+  console.log('Server is listning on port 50000');
+  
 })
-
-app.listen(5000)
-
-// methods
-
-// app.get : read file
-// app.post : insert data
-// app.put : update data
-// app.delete : delete data
-// app.all : works with every one
-// app.listen : same as http.listen
-// app.use
-
