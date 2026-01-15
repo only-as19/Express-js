@@ -1,26 +1,20 @@
+// Basic Express Json
+
 const express = require('express')
-const path = require('path')
-
-
 const app = express()
+const {products} = require('./data')
 
+// Basic Json Example
+// app.get('/',(req,res)=>{
+//   res.json([{name: 'Peter'},{name: 'Mark'}])
+// })
 
-// setup statics and middleware
-// static assets: are those assets that server don't need to chnage these files e.g, JS files, CSS file etc
-
-app.use(express.static('./public'))
-
+// set up json using some useful data
 app.get('/',(req,res)=>{
-  res.sendFile(path.resolve(__dirname,'./navbar-app/index.html'))
+  res.json(products)
 })
-
-app.use((req,res)=>{
-  res.status.send('Resources not found')
-})
-
 
 
 app.listen(5000,()=>{
-  console.log('Server is listning on port 50000');
-  
+  console.log('Server is listening to the port 5000');
 })
