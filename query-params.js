@@ -55,7 +55,7 @@ if(sortedProducts.length<1){
   // res.status(200).send('Cannot find any project')
   
   // another way to handle this
-  return res.status(200).json([{success: "true",data:[]}])
+  res.status(200).json([{success: "true",data:[]}])
 }
 
 
