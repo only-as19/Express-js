@@ -11,8 +11,13 @@ app.get('/',(req,res)=>{
 })
 
 // POST
-app.post('/api/products',(req,res)=>{
-
+app.post('/login',(req,res)=>{
+    console.log(req.body);
+    const {name} = req.body
+    if(name){
+        res.status(200).send(`Welcome ${name}`)
+    }
+    res.status(401).send("Please enter valid credentials")
 })
 
 app.listen(5000,()=>{
