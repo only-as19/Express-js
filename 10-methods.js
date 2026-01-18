@@ -2,10 +2,10 @@
 
 const express = require('express')
 const app = express()
-const {products} = require('./data')
+const {people} = require('./data')
 // GET method: server perform this method to read the data
 app.get('/',(req,res)=>{
-    res.status(200).json({success:'true',data:products})
+    res.status(200).json({success:'true',data:people})
 })
 
 
