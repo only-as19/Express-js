@@ -23,13 +23,13 @@ app.post("/", (req, res) => {
 });
 
 // GET method: server perform this method to read the data
-app.get("/api/people", (req, res) => {
+app.get("/", (req, res) => {
   res.status(200).json({ success: "true", data: people });
 });
 
 // POST[]
 
-app.post("/api/postman/people", (req, res) => {
+app.post("/postman", (req, res) => {
   const { name } = req.body;
   if (!name) {
     return res
@@ -39,7 +39,7 @@ app.post("/api/postman/people", (req, res) => {
   res.status(201).json({ success: true, data: [...people, name] });
 });
 
-app.post("/api/people", (req, res) => {
+app.post("/", (req, res) => {
   const { name } = req.body;
   if (!name) {
     return res
@@ -51,7 +51,7 @@ app.post("/api/people", (req, res) => {
 
 // PUT
 
-app.put("/api/people/:id", (req, res) => {
+app.put("/:id", (req, res) => {
   const { name } = req.body;
   const { id } = req.params;
 
@@ -74,7 +74,7 @@ app.put("/api/people/:id", (req, res) => {
 
 // DELETE
 
-app.delete("/api/people/:id", (req, res) => {
+app.delete("/:id", (req, res) => {
   const { id } = req.params;
 
   const person = people.find((name) => name.id === Number(id));
