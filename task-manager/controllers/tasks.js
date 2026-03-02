@@ -1,8 +1,6 @@
-const Task = require("../models/task");
-const {createCustomError} = require("../models/task");
-
-
-const AsyncWrapper = require("../middlewares/async-wrapper");
+import Task from "../models/task.js";
+import { createCustomError } from "../error/custom-error.js";
+import AsyncWrapper from "../middlewares/async-wrapper.js";
 const getAllTasks = AsyncWrapper(async (req, res) => {
   const tasks = await Task.find({});
   res.status(200).json({ tasks });
@@ -18,7 +16,7 @@ const getTask = AsyncWrapper(async (req, res) => {
   const task = await Task.findOne({ _id: taskID });
   res.status(200).json({ task });
   if (!task) {
-    createCustomError(`No task found with id ${task}`,404)
+    createCustomError(`No task found with id ${task}`, 404);
   }
 });
 
@@ -43,10 +41,4 @@ const updateTask = AsyncWrapper(async (req, res) => {
   res.status(200).json({ task });
 });
 
-module.exports = {
-  getAllTasks,
-  createTask,
-  getTask,
-  updateTask,
-  deleteTask,
-};
+export { getAllTasks, createTask, getTask, updateTask, deleteTask };

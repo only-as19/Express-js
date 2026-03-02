@@ -1,11 +1,12 @@
-const express = require("express");
+import express from "express";
 const app = express();
-const tasks = require("./router/tasks");
-const connectDB = require("./db/connect");
-const notFound = require('./middlewares/not-found').default
-const errorHandler = require('./middlewares/error-handler')
+import tasks from "./router/tasks.js";
+import errorHandler from "./middlewares/error-handler.js";
+import connectDB from "./db/connect.js";
+import notFound from "./middlewares/not-found.js";
 const port = 3000;
-require('dotenv').config()
+import dotenv from "dotenv";
+dotenv.config();
 //middleware
 app.use(express.static('./public'))
 app.use(express.json());
@@ -31,4 +32,4 @@ const start = async () => {
 start()
 
 
-module.exports = app;
+export default app;
