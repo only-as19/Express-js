@@ -1,5 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 
 import tasks from "./router/tasks.js";
 import errorHandler from "./middlewares/error-handler.js";
@@ -9,39 +11,34 @@ import notFound from "./middlewares/not-found.js";
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3000;
+
+// Fix __dirname for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Middleware
 app.use(express.json());
-app.use(express.static("./public"));
 
-// Home Route (important for Vercel)
+// Serve static files correctly
+app.use(express.static(path.join(__dirname, "public")));
+
+// Explicit root route (VERY IMPORTANT)
 app.get("/", (req, res) => {
-  res.sendFile("index.html", { root: "./public" });
+  res.status(200).sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// API Route
+// API routes
 app.use("/api/v1/tasks", tasks);
 
-// 404 Middleware
+// 404 + error handler
 app.use(notFound);
-
-// Error Middleware
 app.use(errorHandler);
 
-// Connect to DB
+// Connect DB (NO app.listen for Vercel)
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URI);
     console.log("Connected to MongoDB");
-
-    // Only run server locally
-    if (process.env.NODE_ENV !== "production") {
-      app.listen(port, () => {
-        console.log(`Server running on port ${port}`);
-      });
-    }
-
   } catch (error) {
     console.log(error);
   }
